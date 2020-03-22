@@ -6,9 +6,17 @@
   "directories": {
     "lib": "lib"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "ginit": "./index.js"
   },
   "author": "Lauren Hamel",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "capture-website": "^0.8.1",
+    "commander": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "fs-extra": "^9.0.0",
+    "lodash": "^4.17.15"
+  }
 }
