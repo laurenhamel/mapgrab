@@ -1,0 +1,14 @@
+{
+  "name": "mapper",
+  "version": "1.0.0",
+  "description": "A utility to screen grab and stitch map images using MapTiler",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lauren Hamel",
+  "license": "MIT"
+}
