@@ -20,7 +20,9 @@ const pkg = require('./package.json');
 program.version(pkg.version);
 
 // Define program options.
-program.option('-l, --location <location>', 'The map location');
+program
+  .option('-l, --location <location>', 'The map location')
+  .option('-t, --tile <number>', 'The tile number within the grid to regenerate');
 
 // Parse program agurments.
 program.parse(process.argv);
@@ -93,7 +95,7 @@ program.parse(process.argv);
   const progress = new ProgressBar.SingleBar({}, ProgressBar.Presets.shades_classic);
 
   // Start the progress bar.
-  progress.start(grid.n);
+  progress.start(program.tile ? 1 : grid.n);
 
   // Ensure the images folder is in place.
   fs.ensureDirSync('images/');
@@ -116,12 +118,34 @@ program.parse(process.argv);
       // Generate an image file name.
       const filename = `${_.padStart(grid.i, 2, '0')}_${x + 1}x${y + 1}_${col.map((coord) => _.replace(col, '.', ',')).join('x')}`;
 
-      // Add screen grabs to the queue.
-      queue.push({
-        url,
-        path: `images/${filename}.png`,
-        coords: col
-      });
+      // If a tile number was given, then use it.
+      if(program.tile) {
+
+        // Only add the requested tile number to the queue.
+        if(grid.i === +program.tile) {
+
+          // Add screen grabs to the queue.
+          queue.push({
+            url,
+            path: `images/${filename}.png`,
+            coords: col
+          });
+
+        }
+
+      }
+
+      // Otherwise, add all tiles to the queue.
+      else {
+
+        // Add screen grabs to the queue.
+        queue.push({
+          url,
+          path: `images/${filename}.png`,
+          coords: col
+        });
+
+      }
 
     });
 
