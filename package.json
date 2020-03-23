@@ -1,19 +1,21 @@
 {
   "name": "mapper",
   "version": "1.0.0",
-  "description": "A utility to screen grab and stitch map images using MapTiler",
+  "description": "A utility to screen grab map images using MapTiler",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "bin": {
-    "ginit": "./index.js"
+    "mapper": "./index.js"
   },
   "author": "Lauren Hamel",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
     "capture-website": "^0.8.1",
+    "chalk": "^3.0.0",
+    "cli-progress": "^3.6.0",
     "commander": "^5.0.0",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.0",
