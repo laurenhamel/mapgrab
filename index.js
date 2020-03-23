@@ -93,39 +93,22 @@ program.parse(process.argv);
   const requests = [];
 
   // Loop through the range of coordinates and grab screenshots.
-  range.forEach((row, x) => {
+  range.each((row, col, x, y) => {
 
-    // Capture each column within the row.
-    row.forEach((col, y) => {
+    // Get the map URL for the coordinate.
+    const url = MapTiler.MapURL(...col);
 
-      // Get the map URL for the coordinate.
-      const url = MapTiler.MapURL(...col);
+    // Increment the grid step.
+    grid.i++;
 
-      // Increment the grid step.
-      grid.i++;
+    // Generate an image file name.
+    const filename = `${_.padStart(grid.i, 2, '0')}_${x + 1}x${y + 1}_${col.map((coord) => _.replace(col, '.', ',')).join('x')}`;
 
-      // Generate an image file name.
-      const filename = `${_.padStart(grid.i, 2, '0')}_${x + 1}x${y + 1}_${col.map((coord) => _.replace(col, '.', ',')).join('x')}`;
+    // If a tile number was given, then use it.
+    if(program.tile) {
 
-      // If a tile number was given, then use it.
-      if(program.tile) {
-
-        // Only add the requested tile number to the queue.
-        if(grid.i === +program.tile) {
-
-          // Add screen grabs to the queue.
-          queue.push({
-            url,
-            path: `images/${filename}.png`,
-            coords: col
-          });
-
-        }
-
-      }
-
-      // Otherwise, add all tiles to the queue.
-      else {
+      // Only add the requested tile number to the queue.
+      if(grid.i === +program.tile) {
 
         // Add screen grabs to the queue.
         queue.push({
@@ -136,7 +119,19 @@ program.parse(process.argv);
 
       }
 
-    });
+    }
+
+    // Otherwise, add all tiles to the queue.
+    else {
+
+      // Add screen grabs to the queue.
+      queue.push({
+        url,
+        path: `images/${filename}.png`,
+        coords: col
+      });
+
+    }
 
   });
 
