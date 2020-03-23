@@ -11,6 +11,7 @@ const { program } = require('commander');
 const capture = require('capture-website');
 const MapTiler = new (require('./lib/MapTiler'))();
 const ProgressBar = require('cli-progress');
+const queue = require('./lib/queue');
 
 // Load package data.
 const pkg = require('./package.json');
@@ -109,11 +110,14 @@ program.parse(process.argv);
       // Get the map URL for the coordinate.
       const url = MapTiler.MapURL(...col);
 
+      // Increment the grid step.
+      grid.i++;
+
       // Generate an image file name.
-      const filename = `${x + 1}x${y + 1}_${col.map((coord) => _.replace(col, '.', ',')).join('x')}`;
+      const filename = `${_.padStart(grid.i, 2, '0')}_${x + 1}x${y + 1}_${col.map((coord) => _.replace(col, '.', ',')).join('x')}`;
 
       // Add screen grabs to the queue.
-      requests.push({
+      queue.push({
         url,
         path: `images/${filename}.png`,
         coords: col
@@ -124,74 +128,72 @@ program.parse(process.argv);
   });
 
   // Capture statuses of images.
-  const images = [];
   const success = [];
   const errors = [];
 
   // Process each request.
-  for( let i = 0; i < requests.length; i++ ) {
+  queue.process((request) => {
 
     // Capture data about the request.
-    const { url, path, coords } = requests[i];
-
-    // Take a screenshot of the map and save it to an image.
-    try {
+    const { url, path, coords } = request;
 
       // Take a screenshot of the map image.
-      const img = await capture.file(url, path, {
+      return capture.file(url, path, {
         overwrite: true,
         hideElements: ['.mapboxgl-control-container'],
-        delay: .5
+        delay: 2.5,
+        timeout: 0
+      }).then(() => {
+
+        // Capture data about the saved image.
+        success.push({
+          coords,
+          path
+        });
+
+      }).catch((error) => {
+
+        // Capture any errors.
+        errors.push({
+          coords,
+          path,
+          error: error.message
+        });
+
+      }).finally(() => {
+
+        // Update the progress bar.
+        progress.increment();
+
       });
 
-      // Capture data about the saved image.
-      success.push({
-        coords,
-        path
-      });
+  })
+    .then(() => {})
+    .catch(() => {})
+    .finally(() => {
 
-      // Save the image.
-      images.push(img);
+      // Stop the progress bar.
+      progress.stop();
 
-      // Increment the grid step.
-      grid.i++;
+      // Determine if errors occurred.
+      if(errors.length) {
 
-      // Update the progress bar.
-      progress.increment();
+        // Output a message.
+        console.log(chalk.red(`Map images saved, but ${errors.length} errors occurred.`));
 
-    } catch (error) {
+        // Output errors.
+        errors.forEach((error) => console.log(error));
 
-      // Capture any errors.
-      errors.push({
-        coords,
-        path,
-        error
-      });
+      }
 
-    }
+      // Otherwise, everything worked.
+      else {
 
-  }
+        // Output a message.
+        console.log(chalk.green(`Map images saved successfully.`));
 
-  // Stop the progress bar.
-  progress.stop();
+      }
 
-  // Determine if errors occurred.
-  if(errors.length) {
-
-    // Output a message.
-    console.log(chalk.red(`✓ Map images saved, but ${errors.length} errors occurred.`));
-
-    // Output errors.
-    errors.forEach((error) => console.log(error));
-
-  }
-
-  // Otherwise, everything worked.
-  else {
-
-    // Output a message.
-    console.log(chalk.green(`✓ Map images saved successfully.`));
-
-  }
+    });
 
 })();
