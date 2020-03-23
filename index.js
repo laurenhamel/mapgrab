@@ -11,7 +11,8 @@ const { program } = require('commander');
 const capture = require('capture-website');
 const MapTiler = new (require('./lib/MapTiler'))();
 const ProgressBar = require('cli-progress');
-const queue = require('./lib/queue');
+const matrix = require('./lib/utils/matrix');
+const queue = require('./lib/utils/queue');
 
 // Load package data.
 const pkg = require('./package.json');
@@ -56,27 +57,15 @@ program.parse(process.argv);
   config.lng.diff = Math.abs(config.lng.max - config.lng.min);
   config.lng.steps = Math.ceil(config.lng.diff / config.lng.offset);
 
-  // Generate an empty matrix for the image coordinates.
-  let matrix = new Array(config.lat.steps).fill(null).map(() => ([
-    ...new Array(config.lng.steps).fill(null)
-  ]));
+  // Generate an matrix of image coordinates.
+  const range = matrix.new(config.lat.steps, config.lng.steps, (lat, lng, x, y) => {
 
-  // Fill the matrix with the range of coordinates.
-  matrix = matrix.map((lat, x) => {
-
-    // Calcualte the latitude coordinate.
+    // Calcualte the latitude and longitude coordinate.
     const _lat = config.lat.min + (x * config.lat.offset);
+    const _lng = config.lng.min + (y * config.lng.offset);
 
-    // Return the calculated coordinates.
-    return lat.map((lng, y) => {
-
-      // Calculate the longitude coordinate.
-      const _lng = config.lng.min + (y * config.lng.offset);
-
-      // Return the new coordinates.
-      return [_lat, _lng];
-
-    });
+    // Return the new coordinates.
+    return [_lat, _lng];
 
   });
 
@@ -104,7 +93,7 @@ program.parse(process.argv);
   const requests = [];
 
   // Loop through the range of coordinates and grab screenshots.
-  matrix.forEach((row, x) => {
+  range.forEach((row, x) => {
 
     // Capture each column within the row.
     row.forEach((col, y) => {
