@@ -1,6 +1,6 @@
 {
   "name": "mapgrab",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A CLI utility to automate screen grabs of a MapTiler map",
   "main": "index.js",
   "directories": {
