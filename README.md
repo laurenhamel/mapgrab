@@ -6,16 +6,10 @@ This MapGrab tool was created to help with easily piecing together big map image
 
 # Installation
 
-1. Clone the repository.
+Install the package using:
 
-```bash
-git clone git@github.com:laurenhamel/mapgrab.git
 ```
-
-2. Install the dependencies.
-
-```bash
-npm i
+npm i -g mapgrab
 ```
 
 # Usage
