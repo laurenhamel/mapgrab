@@ -124,7 +124,7 @@ program
   coords.NE.toString = () => coords.NE.map((coord) => _.replace(coord, '.', ',')).join('x');
 
   // Create a directory for saving the images.
-  const dir = `images/${_.replace(place.short, ' ', '-')}_${coords.SW.toString()}_${coords.NE.toString()}`;
+  const dir = `images/${_.replace(place.short, / /g, '-')}_${coords.SW.toString()}_${coords.NE.toString()}`;
 
   // Ensure the images folder is in place.
   fs.ensureDirSync(dir);
