@@ -1,5 +1,5 @@
 {
-  "name": "mapper",
+  "name": "mapgrab",
   "version": "1.0.0",
   "description": "A CLI utility to automate screen grabs of a MapTiler map",
   "main": "index.js",
