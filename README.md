@@ -30,7 +30,7 @@ mapgrab -l Atlanta
 mapgrab -l Atlanta -c "[33.608576, -84.513990] [33.926377, -84.211179]"
 ```
 
-  > The coordinates given should indicate the bounding box area that should be used to generate the map tiles. These coordinates should equate to `[SW Latitude, SW Longitude] [NE Latitude, NE Longitude]`.
+  > The coordinates given should indicate the bounding box area that should be used to generate the map tiles. These coordinates should be given in the form of `[SW Latitude, SW Longitude] [NE Latitude, NE Longitude]`.
 
 
 **Generating a Specific Map Tile:**
