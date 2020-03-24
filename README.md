@@ -50,7 +50,7 @@ mapgrab -l Atlanta -t 5
 
 Below is an example map after using the MapGrab tool and running the generated images through [AutoStitch][AutoStitch]:
 
-![Atlanta](/docs/Atlanta.jpg?raw=true "Atlanta")
+![Atlanta](https://raw.githubusercontent.com/laurenhamel/mapgrab/master/docs/Atlanta.jpg "Atlanta")
 
 
 [AutoStitch]: http://matthewalunbrown.com/autostitch/autostitch.html
