@@ -1,7 +1,7 @@
 {
   "name": "mapper",
   "version": "1.0.0",
-  "description": "A utility to screen grab map images using MapTiler",
+  "description": "A CLI utility to automate screen grabs of a MapTiler map",
   "main": "index.js",
   "directories": {
     "lib": "lib"
