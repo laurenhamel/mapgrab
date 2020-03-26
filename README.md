@@ -2,7 +2,7 @@
 
 > A CLI utility to automate screen grabs of a MapTiler map
 
-This MapGrab tool was created to help with easily piecing together big map images. It works by calculating a grid for the map area that's given, then taking screenshots of each tile within the grid. The resulting tile images include some overlapping areas to easily allow you to then run the images through a stitching tool like [AutoStitch][AutoStitch] You can easily customize the look and feel of your map by plugging in your own MapTiler map ID containing your own custom colors.
+This MapGrab tool was created to help with easily piecing together big map images. It works by calculating a grid for the map area that's given, then taking screenshots of each tile within the grid. The resulting tile images include some overlapping areas to easily allow you to then run the images through a stitching tool like [AutoStitch][AutoStitch]. You can easily customize the look and feel of your map by plugging in your own MapTiler map ID containing your own custom colors.
 
 # Installation
 
@@ -26,7 +26,7 @@ mapgrab -l Atlanta
 **Generating a Map from Custom Coordinates:**
 
 ```bash
-# mapgrab -l <location -c <coordinates>
+# mapgrab -l <location> -c <coordinates>
 mapgrab -l Atlanta -c "[33.608576, -84.513990] [33.926377, -84.211179]"
 ```
 
