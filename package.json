@@ -10,6 +10,9 @@
     "mapgrab": "./index.js"
   },
   "author": "Lauren Hamel",
+  "repository": "github:laurenhamel/mapgrab",
+  "bugs": "https://github.com/laurenhamel/mapgrab/issues",
+  "homepage": "https://github.com/laurenhamel/mapgrab",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
