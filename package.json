@@ -15,7 +15,7 @@
   "homepage": "https://github.com/laurenhamel/mapgrab",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "capture-website": "^0.8.1",
     "chalk": "^3.0.0",
     "cli-progress": "^3.6.0",
